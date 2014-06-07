@@ -19,7 +19,7 @@ Simply tack on the following options to $.ajax():
   * localCache: Boolean - Specify true to enable the plugin
   * cacheKey: String - What key to use in localStorage
   * cacheTTL: Number - Minutes before the cache should be considered expired
-  * isCacheValid: Function - If you want to do some fancy cache invalidation, use this and we won't bother checking against cacheTTL.  However, cache invalidation is hard, so cacheTTL is recommended :)
+  * isCacheValid: Function - If you want to do some fancy cache invalidation, implement this and return a Boolean and we won't bother checking against cacheTTL.  However, cache invalidation is hard, so cacheTTL is recommended :)
 
 Here's a quick sample call, but take a look at the [Unit Tests](https://rawgithub.com/brophdawg11/jquery.ajax.lscache/master/test/index.html) for a complete examples
 
