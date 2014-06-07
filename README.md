@@ -24,7 +24,7 @@ Here's a quick sample call, but take a look at the [Unit Tests](https://rawgithu
     $.ajax({ url: endpoint,
              dataType: 'json',
              localCache: true,
-             cacheKey: cacheKey,
+             cacheKey: 'cache-me',
              cacheTTL: 1 })
 
 ### tl;dr;
