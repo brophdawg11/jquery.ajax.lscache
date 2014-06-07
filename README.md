@@ -31,7 +31,7 @@ Here's a quick sample call, but take a look at the [Unit Tests](https://rawgithu
 
 #### Initial use case
 
-This idea came about for developing HTML5 mobile apps where bandwidth is limited and sometimes unavailable.  The goal was to cache responses for a period of time to avoid hitting the server repeatedly if the same screens were accessed repeatedly.  This was very easy to implement initially by simply wrapping the jQuery.ajax success/error callbacks and allowing lscache do all the cache expiration dirty work.  Turns out, if I had done my research, I would have found out that Paul Irish [did this right around the same time, likely slightly before me](https://github.com/paulirish/jquery-ajax-localstorage-cache)
+This idea came about for developing HTML5 mobile apps where bandwidth is limited and sometimes unavailable.  The goal was to cache responses for a period of time to avoid hitting the server repeatedly if the same screens were accessed repeatedly.  This was very easy to implement initially by simply wrapping the jQuery.ajax success/error callbacks and allowing lscache do all the cache expiration dirty work.  Turns out, if I had done my research, I would have found out that [Paul Irish had already done this, a bit before me](https://github.com/paulirish/jquery-ajax-localstorage-cache)
 
 #### The problem
 
