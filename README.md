@@ -10,6 +10,8 @@ A jQuery plugin for automatically caching, using, and expiring JSON AJAX respons
  * [jQuery](http://www.jquery.com) - Tested in v2.1, but in theory should work with anything back to v1.6, as it simply needs Deferred, .promise(), $.ajax, and $.ajaxPrefilter.
  * [lscache](https://github.com/brophdawg11/lscache) - Right now this points to a forked version in which some functionality was added to the library.  If a pull request is eventually created/accepted, it can rely on the main library, which is located [here](https://github.com/pamelafox/lscache).  This lionbrary is awesome.  If you're not already using it, you should be.
 
+At some point, I may consider merging this approach with [Paul Irish's plugin](https://github.com/paulirish/jquery-ajax-localstorage-cache) to remove the lscache dependency, while maintaining the additional functionality of this plugin.
+
 #### Usage
 
 Simply tack on the following options to $.ajax():
@@ -47,7 +49,7 @@ That is the entire point of this tiny little plugin.  The approach of using the 
 
   * Allow's lsache to handle expiration
   * Allows expired values in the case of an AJAX failure
-  * Patches into the standard jqXHR Promise interfaces
+  * Patches into the standard jqXHR Promise interface
 
 You tell it how long your data is valid for, it was cache for that long.  But then, if you happen to request the data after ecpiration, and the ajax request fails, we'll hand over your expired data to the jQuery AJAX success functions, and you won't realy even know what happened.  If you REALLY need to know if the data you got back in your success callbacks is expired, you can always check the status of the jqXHR object returned.  If you're in a success callback with a status of 404...you get the idea.
 
