@@ -6,6 +6,10 @@
    <link rel="stylesheet" href="../libs/qunit-1.12.0.css">
 </head>
 <body>
+  <h2 style="text-align: center; max-width: 500px; margin: auto;">
+    Please be patient - These tests take a bit to run because they need to
+    wait for at least a minute every time they need the cache to expire
+  </h2>
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
 
@@ -15,10 +19,212 @@
   <script src="../jquery.ajax.lscache.js"></script>
 
   <script>
-    asyncTest("", function () {
-      strictEqual(true, true, "");
-      start();
-    });
+    var endpoint = "https://rawgit.com/brophdawg11/jquery.ajax.lscache/master/test/data.json",
+        cacheKey = 'ls-key',
+        validData;
+
+    function success(d) { validData = d; runTests(); }
+
+    function error() { alert("Error loading test data, tests will not run."); }
+
+    $.getJSON(endpoint).then(success, error);
+
+    function runTests() {
+
+      function checkData(data) {
+        for (var k in validData) {
+          ok(k in data, "Ensure the correct keys are present in the response");
+          strictEqual(data[k], validData[k], "Ensure the correct values are in the response");
+        }
+      }
+
+      function fail(e) {
+        console.error(e);
+        ok(false, "Global test error: ", e);
+      }
+
+      function delayStart() {
+        // To be nice to github, we'll pause for a bit between each test :)
+        setTimeout(start, 5000);
+      }
+
+      function clearCache() {
+        // Start every test fresh
+        lscache.remove(cacheKey);
+      }
+
+      asyncTest("Test a normal, non-cached request", function () {
+        $.ajax({ url: endpoint,
+                 dataType: 'json',
+                 success: checkData,
+                 error: fail })
+         .done(checkData)
+         .fail(fail)
+         .always(delayStart);
+      });
+
+      asyncTest("Test a request with caching", function () {
+        function checkCache() {
+          // Ensure the data was also cached
+          checkData(lscache.get(cacheKey));
+        }
+
+        clearCache();
+
+        $.ajax({ url: endpoint,
+                 dataType: 'json',
+                 success: checkData,
+                 error: fail,
+                 localCache: true,
+                 cacheKey: cacheKey,
+                 cacheTTL: 1 })
+         .done(checkData)
+         .done(checkCache)
+         .fail(fail)
+         .always(delayStart);
+      });
+
+      asyncTest("Test a failed request with no cache value present", function () {
+
+        function acceptFail() {
+          ok(true, "Expected a failed request, with no cache data returned");
+        }
+
+        clearCache();
+
+        $.ajax({ url: endpoint.replace('.json', '-invalid.json'),
+                 dataType: 'json',
+                 localCache: true,
+                 success: fail,
+                 error: acceptFail,
+                 cacheKey: cacheKey,
+                 cacheTTL: 1 })
+         .done(fail)
+         .fail(acceptFail)
+         .always(delayStart);
+      });
+
+      asyncTest("Test a normal request, with cache available", function () {
+
+        function checkCache() {
+          // Ensure the data was also cached
+          checkData(lscache.get(cacheKey));
+        }
+
+        clearCache();
+
+        $.ajax({ url: endpoint,
+                 dataType: 'json',
+                 localCache: true,
+                 cacheKey: cacheKey,
+                 cacheTTL: 1 })
+         .done(checkData)
+         .done(checkCache)
+         .done(testPrimedCache)
+         .fail(fail);
+
+        function testPrimedCache() {
+          var wasAsync = false;
+
+          function success(d) {
+            strictEqual(wasAsync, false, "Ensure we used a cached value, synchronously");
+            checkData(d);
+          }
+
+          $.ajax({ url: endpoint,
+                   dataType: 'json',
+                   success: success,
+                   error: fail,
+                   localCache: true,
+                   cacheKey: cacheKey,
+                   cacheTTL: 1 })
+           .done(success)
+           .fail(fail)
+           .always(delayStart);
+
+           // Set this to true here.  Since we are expecting a cached value,
+           // we should hit our callbacks synchronously.  If we fall through
+           // to here, that means we hit the wire and never got our cached
+           // value.
+           wasAsync = true;
+        }
+      });
+
+      asyncTest("Test a failed request, with expired cache available", function () {
+
+        function checkCache() {
+          // Ensure the data was also cached
+          checkData(lscache.get(cacheKey));
+        }
+
+        clearCache();
+
+        // Prime cache
+        $.ajax({ url: endpoint,
+                 dataType: 'json',
+                 localCache: true,
+                 cacheKey: cacheKey,
+                 cacheTTL: 1 })
+         .done(checkData)
+         .done(checkCache)
+         // Wait until it expires
+         .done(function () { setTimeout(testPrimedCache, 61 * 1000); })
+         .fail(fail);
+
+        function testPrimedCache() {
+
+          // Should fail the ajax call, but we should get a cached result
+          $.ajax({ url: endpoint.replace('.json', '-invalid.json'),
+                   dataType: 'json',
+                   success: checkData,
+                   error: fail,
+                   localCache: true,
+                   cacheKey: cacheKey,
+                   cacheTTL: 1 })
+           .done(checkData)
+           .fail(fail)
+           .always(delayStart);
+        }
+      });
+
+      asyncTest("Test a failed request, with manually expired cache available", function () {
+
+        function checkCache() {
+          // Ensure the data was also cached
+          checkData(lscache.get(cacheKey));
+        }
+
+        clearCache();
+
+        // Prime cache
+        $.ajax({ url: endpoint,
+                 dataType: 'json',
+                 localCache: true,
+                 cacheKey: cacheKey,
+                 cacheTTL: 1 })
+         .done(checkData)
+         .done(checkCache)
+         // Wait until it expires
+         .done(testPrimedCache)
+         .fail(fail);
+
+        function testPrimedCache() {
+
+          // PRevent caching and fail the ajax call, should get cached result still
+          $.ajax({ url: endpoint.replace('.json', '-invalid.json'),
+                   dataType: 'json',
+                   success: checkData,
+                   error: fail,
+                   localCache: true,
+                   cacheKey: cacheKey,
+                   cacheTTL: 1,
+                   isCacheValid: function () { return false; } })
+           .done(checkData)
+           .fail(fail)
+           .always(delayStart);
+        }
+      });
+    }
   </script>
 </body>
 </html>
