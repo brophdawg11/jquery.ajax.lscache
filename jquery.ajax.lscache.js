@@ -36,8 +36,7 @@ $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
 
       // If the user provided their own options.success function, patch it
       // in since we're in the rejected path
-      if (typeof options.success === 'function'){
-        console.log("Binding options.success to new dfd.done()");
+      if (typeof options.success === 'function') {
         dfd.done(options.success);
       }
 
@@ -46,9 +45,8 @@ $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
     } else {
 
       // If the user provided their own options.error function, we stored
-      // it off in options.realerror so patch that into our new Deferred
+      // a reference to it, so patch that into our new Deferred
       if (realerror) {
-        console.log("Binding realerror to new dfd.fail()");
         dfd.fail(realerror);
       }
 
@@ -65,8 +63,7 @@ $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
   // Patch our handlers in
   jqXHR.fail(tryCache).done(cacheResult);
 
-  if (isValid && value){
-    console.log("Cache value available and valid, aborting request");
+  if (isValid && value) {
     jqXHR.abort();
   } else {
     // We're launching the request.  On failure, we accept an expired value
