@@ -33,6 +33,10 @@ Here's a quick sample call, but take a look at the [Unit Tests](https://rawgithu
              cacheKey: 'cache-me',
              cacheTTL: 1 })
 
+#### Future Enhancements:
+
+ - Allow passing in of a different caching mechanism adhering to a common API, to allow usage of sessionStorage, webSql, etc.
+
 ### tl;dr;
 
 #### Initial use case
@@ -56,5 +60,4 @@ That is the entire point of this tiny little plugin.  The approach of using the 
   * Patches into the standard jqXHR Promise interface
 
 You tell it how long your data is valid for, it was cache for that long.  But then, if you happen to request the data after ecpiration, and the ajax request fails, we'll hand over your expired data to the jQuery AJAX success functions, and you won't realy even know what happened.  If you REALLY need to know if the data you got back in your success callbacks is expired, you can always check the status of the jqXHR object returned.  If you're in a success callback with a status of 404...you get the idea.
-
 
