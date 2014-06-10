@@ -12,6 +12,10 @@ A jQuery plugin for automatically caching, using, and expiring JSON AJAX respons
 
 At some point, I may consider merging this approach with [Paul Irish's plugin](https://github.com/paulirish/jquery-ajax-localstorage-cache) to remove the lscache dependency, while maintaining the additional functionality of this plugin.
 
+##### Using Zepto?
+
+Check out [zepto.ajax.lscache](https://github.com/brophdawg11/zepto.ajax.lscache)
+
 #### Usage
 
 Simply tack on the following options to $.ajax():
