@@ -8,7 +8,7 @@ A jQuery plugin for automatically caching, using, and expiring JSON AJAX respons
 #### Dependencies
 
  * [jQuery](http://www.jquery.com) - Tested in v2.1, but in theory should work with anything back to v1.6, as it simply needs Deferred, .promise(), $.ajax, and $.ajaxPrefilter.
- * [lscache](https://github.com/brophdawg11/lscache) - Right now this points to a forked version in which some functionality was added to the library.  If a pull request is eventually created/accepted, it can rely on the main library, which is located [here](https://github.com/pamelafox/lscache).  This lionbrary is awesome.  If you're not already using it, you should be.
+ * [lscache](https://github.com/brophdawg11/lscache) - Right now this points to a forked version in which some functionality was added to the library.  If a pull request is eventually created/accepted, it can rely on the main library, which is located [here](https://github.com/pamelafox/lscache).  This library is awesome.  If you're not already using it, you should be.
 
 At some point, I may consider merging this approach with [Paul Irish's plugin](https://github.com/paulirish/jquery-ajax-localstorage-cache) to remove the lscache dependency, while maintaining the additional functionality of this plugin.
 
