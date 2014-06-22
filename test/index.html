@@ -19,7 +19,10 @@
   <script src="../jquery.ajax.lscache.js"></script>
 
   <script>
-    var endpoint = "https://rawgit.com/brophdawg11/jquery.ajax.lscache/master/test/data.json",
+
+  QUnit.config.autostart = false;
+
+    var endpoint = "data.json",
         cacheKey = 'ls-key',
         validData;
 
@@ -52,6 +55,8 @@
         // Start every test fresh
         lscache.remove(cacheKey);
       }
+
+      start();
 
       asyncTest("Test a normal, non-cached request", function () {
         $.ajax({ url: endpoint,

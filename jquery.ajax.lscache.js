@@ -1,5 +1,8 @@
 $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
 
+  var lscache = window.lscache;
+  if (!lscache) { return; }
+
   // Cache it ?
   if (!options.localCache) { return; }
 
@@ -54,6 +57,7 @@ $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
     }
   }
 
+  // Cache the response from a successful AJAX response
   function cacheResult(data) {
     var args = Array.prototype.slice.call(arguments);
     lscache.set(cacheKey, data, minstl);
