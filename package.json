@@ -1,0 +1,38 @@
+{
+  "name": "jquery.ajax.lscache",
+  "version": "0.1.1",
+  "description": "A jQuery plugin for automatically caching, using, and expiring JSON AJAX responses using localStorage",
+  "main": "jquery.ajax.lscache.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "doc": "gulp docs",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brophdawg11/jquery.ajax.lscache.git"
+  },
+  "keywords": [
+    "async",
+    "ajax",
+    "cache",
+    "jquery"
+  ],
+  "author": "Matt Brophy <matt@brophy.org> (http://www.brophy.org/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brophdawg11/jquery.ajax.lscache/issues"
+  },
+  "homepage": "https://github.com/brophdawg11/jquery.ajax.lscache",
+  "devDependencies": {
+    "gulp-rename": "~1.2.0",
+    "gulp-uglify": "~0.3.0",
+    "gulp-docco": "0.0.4",
+    "gulp-bump": "~0.1.8",
+    "gulp-qunit": "~0.3.3",
+    "gulp": "~3.8.1"
+  }
+}

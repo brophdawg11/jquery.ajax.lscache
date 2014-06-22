@@ -1,0 +1,25 @@
+{
+  "name": "jquery.ajax.lscache",
+  "version": "0.1.1",
+  "homepage": "https://github.com/brophdawg11/jquery.ajax.lscache",
+  "authors": [
+    "Matt Brophy <matt@brophy.org>"
+  ],
+  "description": "A jQuery plugin for automatically caching, using, and expiring JSON AJAX responses using localStorage",
+  "main": "jquery.ajax.lscache.min.js",
+  "keywords": [
+    "async",
+    "ajax",
+    "cache",
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "*.sublime*"
+  ]
+}
