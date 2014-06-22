@@ -1,6 +1,8 @@
 jQuery.ajax.lscache
 ===================
 
+![Build Status](https://travis-ci.org/brophdawg11/jquery.ajax.lscache.svg?branch=master)
+
 A jQuery plugin for automatically caching, using, and expiring JSON AJAX responses using localStorage
 
 [Unit Tests](https://rawgithub.com/brophdawg11/jquery.ajax.lscache/master/test/index.html)
